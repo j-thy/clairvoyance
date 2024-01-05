@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django_vite',
     'inertia',
     'js_routes',
-    'example_app'
+    'banners_app'
 ]
 
 MIDDLEWARE = [
