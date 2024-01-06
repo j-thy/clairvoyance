@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_vite',
     'inertia',
     'js_routes',
+    'import_export',
     'banners_app.apps.BannersAppConfig'
 ]
 
