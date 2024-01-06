@@ -3,14 +3,19 @@
 [Used this template as a base.](https://github.com/pmdevita/Django-Svelte-Template)
 
 Backend: Django
+
 Routing: Inertia.js
+
 Frontend: Svelte + Vite
+
 CSS: Tailwind CSS
+
 UI Library: Flowbite Svelte
 
 ## Installation and usage
 
 - Clone and cd into the project
+- Ensure Python 3.8+ and Node.js 18+ is installed
 - Create a Python virtual environment (tested on Python 3.10.6)
 
 ```shell
