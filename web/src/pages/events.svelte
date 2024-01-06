@@ -3,21 +3,29 @@
     export let events;
     let counter = 0;
     let incCounter = () => counter++;
+    import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 </script>
-<div class="p-8">
-  <Alert>
-    <span class="font-medium">Info alert!</span>
-    Change a few things up and try submitting again.
-  </Alert>
-</div>
-<p>Hello from Svelte!
-    <span style="color: transparent">
-        <span class="text-blue-500">and Tailwind!</span>
-    </span>
-    <button on:click={incCounter}>Counter: {counter}</button>
-</p>
-<ul>
+  <Table striped={true}>
+    <TableHead>
+      <TableHeadCell>Product name</TableHeadCell>
+      <TableHeadCell>Color</TableHeadCell>
+      <TableHeadCell>Category</TableHeadCell>
+      <TableHeadCell>Price</TableHeadCell>
+      <TableHeadCell>
+        <span class="sr-only">Edit</span>
+      </TableHeadCell>
+    </TableHead>
+    <TableBody class="divide-y">
     {#each events as event}
-        <li>{event.name}</li>
+      <TableBodyRow>
+        <TableBodyCell>{event.name}</TableBodyCell>
+        <TableBodyCell>Sliver</TableBodyCell>
+        <TableBodyCell>Laptop</TableBodyCell>
+        <TableBodyCell>$2999</TableBodyCell>
+        <TableBodyCell>
+          <a href="/tables" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Edit</a>
+        </TableBodyCell>
+      </TableBodyRow>
     {/each}
-</ul>
+    </TableBody>
+  </Table>
