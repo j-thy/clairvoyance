@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { resolve } from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [tsconfigPaths()],
   base: "/static/",
   plugins: [
       svelte({

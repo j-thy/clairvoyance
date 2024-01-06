@@ -1,5 +1,4 @@
 import 'vite/modulepreload-polyfill';
-import './app.css'
 import { createInertiaApp } from '@inertiajs/svelte'
 import DefaultLayout from "./layouts/DefaultLayout.svelte";
 
