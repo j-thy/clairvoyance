@@ -41,7 +41,3 @@
     </TableBody>
     {/if}
   </Table>
-  <div class="flex space-x-3 rtl:space-x-reverse">
-    <PaginationItem large href="/events?page=2" on:click={previous}>Previous</PaginationItem>
-    <PaginationItem large href="/events?page=3" on:click={next}>Next</PaginationItem>
-  </div>
