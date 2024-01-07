@@ -5,6 +5,7 @@
   import { router } from '@inertiajs/svelte'
 	import { onMount } from 'svelte';
   export let events = undefined;
+  import { inertia, Link } from '@inertiajs/svelte'
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
@@ -13,6 +14,7 @@
   })
 </script>
   <Table striped={true}>
+    <a href="/events?page=2" use:inertia="{{ only: ['events'] }}">Show active</a>
     <TableHead>
       <TableHeadCell>Image</TableHeadCell>
       <TableHeadCell>Event</TableHeadCell>
