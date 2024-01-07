@@ -12,6 +12,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "autoprefixer": "^10.4.14",
+    "daisyui": "^4.5.0",
     "flowbite": "^2.2.1",
     "flowbite-svelte": "^0.44.21",
     "postcss": "^8.4.23",
