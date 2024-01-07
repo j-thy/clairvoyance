@@ -1,18 +1,13 @@
 <script>
-  import { Alert } from 'flowbite-svelte';
   import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { Img } from 'flowbite-svelte';
-	import { onMount } from 'svelte';
-  import { router } from '@inertiajs/svelte'
   import { ListPlaceholder } from 'flowbite-svelte';
+  import { router } from '@inertiajs/svelte'
+	import { onMount } from 'svelte';
   export let events = undefined;
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
-
-    // This will show the variable as empty.
-    console.log(events); 
-
     // We fire a partial reload to load the data in:
     router.reload({ only: ['events'] })
   })
