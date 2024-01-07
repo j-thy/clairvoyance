@@ -8,7 +8,7 @@ from asgiref.sync import sync_to_async
 # 2. Event view is created
 class EventView(View):
     async def get(self, request):
-        events = Paginator([event async for event in Event.objects.all()], 15)
+        events = Paginator([event async for event in Event.objects.all()], 10)
 
         # Get all events from the database
         # Using inertia, render events.svelte, and send it the events object through props.

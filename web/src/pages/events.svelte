@@ -6,12 +6,19 @@
 	import { onMount } from 'svelte';
   export let events = undefined;
   import { inertia, Link } from '@inertiajs/svelte'
+  import { Pagination, PaginationItem } from 'flowbite-svelte';
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
     // We fire a partial reload to load the data in:
     router.reload({ only: ['events'] })
   })
+  const previous = () => {
+    alert('Previous btn clicked. Make a call to your server to fetch data.');
+  };
+  const next = () => {
+    alert('Next btn clicked. Make a call to your server to fetch data.');
+  };
 </script>
   <Table striped={true}>
     <a href="/events?page=2" use:inertia="{{ only: ['events'] }}">Show active</a>
@@ -34,3 +41,7 @@
     </TableBody>
     {/if}
   </Table>
+  <div class="flex space-x-3 rtl:space-x-reverse">
+    <PaginationItem large href="/events?page=2" on:click={previous}>Previous</PaginationItem>
+    <PaginationItem large href="/events?page=3" on:click={next}>Next</PaginationItem>
+  </div>
