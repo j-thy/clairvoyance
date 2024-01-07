@@ -1,10 +1,21 @@
 <script>
   import { Alert } from 'flowbite-svelte';
-  export let events;
-  let counter = 0;
-  let incCounter = () => counter++;
   import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { Img } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
+  import { router } from '@inertiajs/svelte'
+  import { ListPlaceholder } from 'flowbite-svelte';
+  export let events = undefined;
+
+  // mounted() in VueJS / useEffect() in React
+  onMount(() => {
+
+    // This will show the variable as empty.
+    console.log(events); 
+
+    // We fire a partial reload to load the data in:
+    router.reload({ only: ['events'] })
+  })
 </script>
   <Table striped={true}>
     <TableHead>
@@ -12,7 +23,10 @@
       <TableHeadCell>Event</TableHeadCell>
       <TableHeadCell>Region</TableHeadCell>
     </TableHead>
-    <TableBody class="divide-y">
+    {#if events === undefined}
+      <ListPlaceholder />
+    {:else}
+      <TableBody class="divide-y">
     {#each events as event}
       <TableBodyRow>
         <TableBodyCell><Img src="/static/event_imgs/{event.image_file}" alt="sample 1" size="h-16" class="rounded-lg" /></TableBodyCell>
@@ -21,4 +35,5 @@
       </TableBodyRow>
     {/each}
     </TableBody>
+    {/if}
   </Table>

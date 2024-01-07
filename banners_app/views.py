@@ -1,4 +1,4 @@
-from inertia import render
+from inertia import lazy, render
 from .models import Event
 from django.views import View
 
@@ -10,8 +10,7 @@ def example_view(request):
 class EventView(View):
     def get(self, request):
         # Get all events from the database
-        events = Event.objects.all()
         # Using inertia, render events.svelte, and send it the events object through props.
         return render(request, 'events', props={
-            "events": events,
+            "events": lazy(lambda: Event.objects.all()),
         })
