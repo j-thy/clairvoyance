@@ -41,6 +41,8 @@ python3 -m pip install -r requirements.txt
 echo "SECRET_KEY=$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" >> .env
 ```
 
+- Add `DEV_SERVER_HOST=<host_ip>` to `.env`
+
 - Apply the migrations
 
 ```shell
@@ -57,13 +59,13 @@ npm i
 - Run the Python server
 
 ```shell
-python3 manage.py runserver
+python3 manage.py runserver 0.0.0.0:8000
 ```
 
 - Open another terminal window and run the Vite server
 
 ```shell
-npm run dev
+npm run dev -- --host
 ```
 
-Now open your browser and go to: `http://localhost:8000/`
+Now open your browser and go to: `http://localhost:8000/` or http://<host_ip>:8000/`

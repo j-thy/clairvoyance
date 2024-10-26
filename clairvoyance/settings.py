@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -157,13 +157,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Vite
 
-DJANGO_VITE_DEV_MODE = True
-DJANGO_VITE_ASSETS_PATH = BASE_DIR / "web" / "dist"
-# This tells Django to load the manifest from the front end build folder
-# Comment it out if you run python manage.py collectstatic
-DJANGO_VITE_MANIFEST_PATH = DJANGO_VITE_ASSETS_PATH / "manifest.json"
-DJANGO_VITE_DEV_SERVER_PORT = 5173
-STATICFILES_DIRS.append(DJANGO_VITE_ASSETS_PATH)
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": True,
+    # This tells Django to load the manifest from the front end build folder
+    # Comment it out if you run python manage.py collectstatic
+    "manifest_path": BASE_DIR / "web" / "dist" / "manifest.json",
+    "dev_server_host": config('DEV_SERVER_HOST'),
+    "dev_server_port": 5173
+  }
+}
 
 # Inertia
 

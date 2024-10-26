@@ -1,9 +1,15 @@
+import daisyui from "daisyui"
+import flowbite from "flowbite/plugin"
+
 const config = {
-  content: ['./src/**/*.{html,js,svelte,ts}', './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'],
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+  ],
 
   plugins: [
-    require('flowbite/plugin'),
-    require("daisyui"),
+    flowbite,
+    daisyui,
   ],
 
   darkMode: 'class',
