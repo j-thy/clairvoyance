@@ -14,10 +14,10 @@
     router.reload({ only: ['events'] })
   })
   const previous = () => {
-    alert('Previous btn clicked. Make a call to your server to fetch data.');
+    router.visit("/events?page=2", {only: ['events'],})
   };
   const next = () => {
-    alert('Next btn clicked. Make a call to your server to fetch data.');
+    router.visit("/events?page=3", {only: ['events'],})
   };
 </script>
   <Table striped={true}>
@@ -41,3 +41,7 @@
     </TableBody>
     {/if}
   </Table>
+  <div class="flex space-x-3 rtl:space-x-reverse">
+    <PaginationItem large on:click={previous}>Previous</PaginationItem>
+    <PaginationItem large on:click={next}>Next</PaginationItem>
+  </div>
