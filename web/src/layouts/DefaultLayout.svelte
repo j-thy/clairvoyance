@@ -17,9 +17,9 @@
   </NavUl>
 </Navbar>
 
-<body class="bg-white dark:bg-gray-800 dark:text-white mb-auto h-10">
+<div class="bg-white dark:bg-gray-800 dark:text-white mb-auto h-10">
     <div><slot></slot></div>
-</body>
+</div>
 
 <Footer>
   <FooterCopyright href="/" by="Flowbite™" year={2022} />
