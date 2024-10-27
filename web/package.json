@@ -10,6 +10,8 @@
     "build-ssr": "vite build --outDir dist-ssr --ssr src/ssr.js"
   },
   "devDependencies": {
+    "@melt-ui/svelte": "^0.85.0",
+    "@sveltejs/enhanced-img": "^0.3.10",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "autoprefixer": "^10.4.20",
     "bits-ui": "^0.21.16",

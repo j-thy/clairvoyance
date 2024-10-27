@@ -10,8 +10,8 @@ const config = {
         './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
     ],
     plugins: [
-      flowbite,
-      daisyui,
+        flowbite,
+        daisyui,
     ],
     safelist: ["dark"],
     theme: {

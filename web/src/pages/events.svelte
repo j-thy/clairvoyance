@@ -1,12 +1,9 @@
 <script>
-  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
-  import { Img } from 'flowbite-svelte';
-  import { ListPlaceholder } from 'flowbite-svelte';
   import { router } from '@inertiajs/svelte'
 	import { onMount } from 'svelte';
   export let events = undefined;
   import { inertia, Link } from '@inertiajs/svelte'
-  import { Pagination, PaginationItem } from 'flowbite-svelte';
+  import * as Table from "$lib/components/ui/table";
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
@@ -20,28 +17,26 @@
     router.visit("/events?page=3", {only: ['events'],})
   };
 </script>
-  <Table striped={true}>
+<!-- Make a div with dark class -->
+<div class="relative flex min-h-screen flex-col dark">
+  <Table.Root>
+    <Table.Caption>Banner rateups.</Table.Caption>
     <a href="/events?page=2" use:inertia="{{ only: ['events'] }}">Show active</a>
-    <TableHead>
-      <TableHeadCell>Image</TableHeadCell>
-      <TableHeadCell>Event</TableHeadCell>
-      <TableHeadCell>Region</TableHeadCell>
-    </TableHead>
-    {#if events === undefined}
-      <ListPlaceholder />
-    {:else}
-      <TableBody class="divide-y">
-    {#each events as event}
-      <TableBodyRow>
-        <TableBodyCell><Img src="/static/event_imgs/{event.image_file}" alt="sample 1" size="h-16" class="rounded-lg" /></TableBodyCell>
-        <TableBodyCell>{event.name}</TableBodyCell>
-        <TableBodyCell>{event.region}</TableBodyCell>
-      </TableBodyRow>
-    {/each}
-    </TableBody>
-    {/if}
-  </Table>
-  <div class="flex space-x-3 rtl:space-x-reverse">
-    <PaginationItem large on:click={previous}>Previous</PaginationItem>
-    <PaginationItem large on:click={next}>Next</PaginationItem>
-  </div>
+    <Table.Header>
+      <Table.Row>
+        <Table.Head class="w-[100px]">Image</Table.Head>
+        <Table.Head>Event</Table.Head>
+        <Table.Head class="text-right">Region</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      {#each events as event}
+      <Table.Row>
+        <Table.Cell><img src="/static/event_imgs/{event.image_file}" alt="sample 1" class="rounded-lg"></Table.Cell>
+        <Table.Cell class="font-medium">{event.name}</Table.Cell>
+        <Table.Cell class="text-right">{event.region}</Table.Cell>
+      </Table.Row>
+      {/each}
+    </Table.Body>
+  </Table.Root>
+</div>

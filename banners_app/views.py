@@ -15,3 +15,7 @@ class EventView(View):
         return render(request, 'events', props={
             "events": lazy(lambda: events.page(min(int(request.GET.get('page') if request.GET.get('page') else 1), events.num_pages)).object_list),
         })
+
+class ExampleView(View):
+    async def get(self, request):
+        return render(request, 'example')
