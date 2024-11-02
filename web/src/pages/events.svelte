@@ -1,20 +1,32 @@
 <script>
   import { router } from '@inertiajs/svelte'
 	import { onMount } from 'svelte';
-  export let events = undefined;
   import { inertia, Link } from '@inertiajs/svelte'
   import * as Table from "$lib/components/ui/table";
+  import { Button } from "$lib/components/ui/button/index.js";
+  import { toast } from "svelte-sonner";
+
+  // Get events from props
+	let { events = undefined } = $props();
+
+  // Get current page number from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPageNum = urlParams.has('page');
+  let page = isPageNum ? parseInt(urlParams.get('page')) : 1;
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
     // We fire a partial reload to load the data in:
     router.reload({ only: ['events'] })
   })
+
   const previous = () => {
-    router.visit("/events?page=2", {only: ['events'],})
+    if (page-1 > 0) {
+      router.visit(`/events?page=${page-1}`, { only: ['events'] });
+    }
   };
   const next = () => {
-    router.visit("/events?page=3", {only: ['events'],})
+    router.visit(`/events?page=${page+1}`, { only: ['events'] });
   };
 </script>
 <!-- Make a div with dark class -->
@@ -39,4 +51,7 @@
       {/each}
     </Table.Body>
   </Table.Root>
+  <Button onclick={previous}>Previous</Button>
+  <Button onclick={next}>Next</Button>
+  <Button onclick={() => toast("Hello world")}>Show toast</Button>
 </div>
