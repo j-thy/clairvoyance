@@ -7,7 +7,7 @@
   import { toast } from "svelte-sonner";
 
   // Get events from props
-	let { events = undefined } = $props();
+	let { events = undefined, num_pages = undefined } = $props();
 
   // Get current page number from URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -17,23 +17,39 @@
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
     // We fire a partial reload to load the data in:
-    router.reload({ only: ['events'] })
+    // If events is undefined, we reload the page
+    if (events === undefined) {
+      router.reload({ only: ['events', 'num_pages'] })
+      console.log("Mounted");
+    }
   })
 
   const previous = () => {
     if (page-1 > 0) {
       router.visit(`/events?page=${page-1}`, { only: ['events'] });
+      console.log("Previous");
+    }
+    else {
+      toast("You are at the first page")
     }
   };
   const next = () => {
-    router.visit(`/events?page=${page+1}`, { only: ['events'] });
+    if (page+1 <= num_pages) {
+      router.visit(`/events?page=${page+1}`, { only: ['events'] });
+      console.log("Next");
+    }
+    else {
+      toast("You are at the last page")
+    }
   };
 </script>
 <!-- Make a div with dark class -->
+<Button onclick={previous}>Previous</Button>
+<Button onclick={next}>Next</Button>
 <div class="relative flex min-h-screen flex-col dark">
   <Table.Root>
     <Table.Caption>Banner rateups.</Table.Caption>
-    <a href="/events?page=2" use:inertia="{{ only: ['events'] }}">Show active</a>
+    <a href="/events?page=1" use:inertia="{{ only: ['events'] }}">Show active</a>
     <Table.Header>
       <Table.Row>
         <Table.Head class="w-[100px]">Image</Table.Head>
@@ -51,7 +67,4 @@
       {/each}
     </Table.Body>
   </Table.Root>
-  <Button onclick={previous}>Previous</Button>
-  <Button onclick={next}>Next</Button>
-  <Button onclick={() => toast("Hello world")}>Show toast</Button>
 </div>
