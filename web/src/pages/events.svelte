@@ -12,7 +12,8 @@
   // Get current page number from URL
   const urlParams = new URLSearchParams(window.location.search);
   const isPageNum = urlParams.has('page');
-  let page = isPageNum ? parseInt(urlParams.get('page')) : 1;
+  const page_num = parseInt(urlParams.get('page'))
+  let page = isPageNum && !isNaN(page_num) ? page_num : 1;
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
