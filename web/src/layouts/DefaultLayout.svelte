@@ -1,7 +1,9 @@
 <script>
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
   import { Button } from "$lib/components/ui/button";
+  import { Toaster } from "$lib/components/ui/sonner/index.js";
 </script>
+<Toaster />
 <div style="display: contents" class="relative flex min-h-screen flex-col">
   <Navbar class="dark:bg-transparent">
     <NavBrand href="/">
