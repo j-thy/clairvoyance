@@ -3,8 +3,6 @@
 	import { onMount } from 'svelte';
   import { inertia, Link } from '@inertiajs/svelte'
   import * as Table from "$lib/components/ui/table";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { toast } from "svelte-sonner";
   import * as Pagination from "$lib/components/ui/pagination";
   import ChevronLeft from "lucide-svelte/icons/chevron-left";
   import ChevronRight from "lucide-svelte/icons/chevron-right";
@@ -17,7 +15,6 @@
   const isPageNum = urlParams.has('page');
   const parse_num = parseInt(urlParams.get('page'))
   let page_num = $state(isPageNum && !isNaN(parse_num) ? parse_num : 1);
-  $inspect(page_num);
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
@@ -29,27 +26,9 @@
     }
   })
 
-  const previous = () => {
-    if (page_num > 0) {
-      router.visit(`/events?page=${page_num}`, { only: ['events'] });
-      console.log("Previous");
-    }
-    else {
-      toast("You are at the first page")
-    }
-  };
-  const next = () => {
-    if (page_num <= num_pages) {
-      router.visit(`/events?page=${page_num}`, { only: ['events'] });
-      console.log("Next");
-    }
-    else {
-      toast("You are at the last page")
-    }
-  };
   const gotoNum = () => {
-    router.visit(`/events?page=${page_num}`);
-    console.log("Goto2");
+    router.visit(`/events?page=${page_num}`, { only: ['events'] });
+    console.log("Goto =>", page_num);
   };
 </script>
 
@@ -75,16 +54,18 @@
     </Table.Body>
   </Table.Root>
 
-  <Pagination.Root bind:page={page_num} count={num_pages} perPage={1}>
+  <Pagination.Root bind:page={page_num} count={num_pages} onPageChange={gotoNum} perPage={1}>
     {#snippet children({ pages, currentPage })}
       {currentPage}
       <Pagination.Content>
-        <Pagination.Item>
-          <Pagination.PrevButton onclick={previous}>
-            <ChevronLeft class="size-4" />
-            <span class="hidden sm:block">Previous</span>
-          </Pagination.PrevButton>
-        </Pagination.Item>
+        {#if currentPage !== 1}
+          <Pagination.Item>
+            <Pagination.PrevButton>
+              <ChevronLeft class="size-4" />
+              <span class="hidden sm:block">Previous</span>
+            </Pagination.PrevButton>
+          </Pagination.Item>
+        {/if}
         {#each pages as page (page.key)}
           {#if page.type === "ellipsis"}
             <Pagination.Item>
@@ -92,18 +73,20 @@
             </Pagination.Item>
           {:else}
             <Pagination.Item>
-              <Pagination.Link {page} onclick={gotoNum} isActive={currentPage === page.value}>
+              <Pagination.Link {page} isActive={currentPage === page.value}>
                 {page.value}
               </Pagination.Link>
             </Pagination.Item>
           {/if}
         {/each}
-        <Pagination.Item>
-          <Pagination.NextButton onclick={next}>
-            <span class="hidden sm:block">Next</span>
-            <ChevronRight class="size-4" />
-          </Pagination.NextButton>
-        </Pagination.Item>
+        {#if currentPage !== num_pages}
+          <Pagination.Item>
+            <Pagination.NextButton>
+              <span class="hidden sm:block">Next</span>
+              <ChevronRight class="size-4" />
+            </Pagination.NextButton>
+          </Pagination.Item>
+        {/if}
       </Pagination.Content>
     {/snippet}
   </Pagination.Root>
