@@ -5,6 +5,9 @@
   import * as Table from "$lib/components/ui/table";
   import { Button } from "$lib/components/ui/button/index.js";
   import { toast } from "svelte-sonner";
+  import * as Pagination from "$lib/components/ui/pagination";
+  import ChevronLeft from "lucide-svelte/icons/chevron-left";
+  import ChevronRight from "lucide-svelte/icons/chevron-right";
 
   // Get events from props
 	let { events = undefined, num_pages = undefined } = $props();
@@ -12,8 +15,9 @@
   // Get current page number from URL
   const urlParams = new URLSearchParams(window.location.search);
   const isPageNum = urlParams.has('page');
-  const page_num = parseInt(urlParams.get('page'))
-  let page = isPageNum && !isNaN(page_num) ? page_num : 1;
+  const parse_num = parseInt(urlParams.get('page'))
+  let page_num = $state(isPageNum && !isNaN(parse_num) ? parse_num : 1);
+  $inspect(page_num);
 
   // mounted() in VueJS / useEffect() in React
   onMount(() => {
@@ -26,8 +30,8 @@
   })
 
   const previous = () => {
-    if (page-1 > 0) {
-      router.visit(`/events?page=${page-1}`, { only: ['events'] });
+    if (page_num > 0) {
+      router.visit(`/events?page=${page_num}`, { only: ['events'] });
       console.log("Previous");
     }
     else {
@@ -35,18 +39,20 @@
     }
   };
   const next = () => {
-    if (page+1 <= num_pages) {
-      router.visit(`/events?page=${page+1}`, { only: ['events'] });
+    if (page_num <= num_pages) {
+      router.visit(`/events?page=${page_num}`, { only: ['events'] });
       console.log("Next");
     }
     else {
       toast("You are at the last page")
     }
   };
+  const gotoNum = () => {
+    router.visit(`/events?page=${page_num}`);
+    console.log("Goto2");
+  };
 </script>
-<!-- Make a div with dark class -->
-<Button onclick={previous}>Previous</Button>
-<Button onclick={next}>Next</Button>
+
 <div class="relative flex min-h-screen flex-col dark">
   <Table.Root>
     <Table.Caption>Banner rateups.</Table.Caption>
@@ -68,4 +74,37 @@
       {/each}
     </Table.Body>
   </Table.Root>
+
+  <Pagination.Root bind:page={page_num} count={num_pages} perPage={1}>
+    {#snippet children({ pages, currentPage })}
+      {currentPage}
+      <Pagination.Content>
+        <Pagination.Item>
+          <Pagination.PrevButton onclick={previous}>
+            <ChevronLeft class="size-4" />
+            <span class="hidden sm:block">Previous</span>
+          </Pagination.PrevButton>
+        </Pagination.Item>
+        {#each pages as page (page.key)}
+          {#if page.type === "ellipsis"}
+            <Pagination.Item>
+              <Pagination.Ellipsis />
+            </Pagination.Item>
+          {:else}
+            <Pagination.Item>
+              <Pagination.Link {page} onclick={gotoNum} isActive={currentPage === page.value}>
+                {page.value}
+              </Pagination.Link>
+            </Pagination.Item>
+          {/if}
+        {/each}
+        <Pagination.Item>
+          <Pagination.NextButton onclick={next}>
+            <span class="hidden sm:block">Next</span>
+            <ChevronRight class="size-4" />
+          </Pagination.NextButton>
+        </Pagination.Item>
+      </Pagination.Content>
+    {/snippet}
+  </Pagination.Root>
 </div>
